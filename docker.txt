@@ -6,8 +6,8 @@ docker container ls                                                             
 docker container stop ts-docker-container-monirul                                       ---- this is for stop a container
 docker container start --attach ts-docker-container-monirul                             ---- this is for run container in attach mood
 docker container prune                                                                  ---- for delete all container
-
-
+docker ps -a                                                                            ---- show running container
+docker container inspect container_name                                                 ---- show all details about a container
 ----------------------------------------- Introduction to docker volumes --------------------------------------------------------------
  docker volume ls                                                                                              ----- show all volume
  docker run -p 5000:5000 --name ts-container-monirul --rm -v ts-docker-logs:/app/logs  ts-docker-monirul:v2    ----- named volume
@@ -23,3 +23,16 @@ docker run -p 5000:5000 --name ts-container-monirul  -v  ts-docker-logs://app/lo
 
  ------------------------------------------------------cmd--------------------------------------------------------------
 docker run -p 5000:5000 --name ts-container-monirul  -v  ts-docker-logs://app/logs -w //app  -v "%cd%"://app -v //app/node_modules  --rm ts-docker-monirul:v1  
+
+-----------------------------------------------------------------Internal database connect ------------------------------------------------
+DATABASE_URL=mongodb://localhost:27017/explore_docker   docker cant understand this 
+DATABASE_URL=mongodb://host.docker.internal:27017/explore_docker   
+
+-------------------------------------------- docker network---------------------------------------------------------------------------------
+docker pull mongo
+docker network create ts-docker-network 
+docker network ls
+docker run --name mongodb --rm --network ts-docker-network  mongo
+docker run -p 5000:5000 --name ts-containe --rm -w //app -v ts-docker-logs://app/logs -v "//$(pwd)"://app -v //app/node_modules --rm --env-file .env --network ts-docker-network ts-docke
+r-monirul:v1
+docker network rm net_id
