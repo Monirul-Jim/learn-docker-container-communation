@@ -36,3 +36,5 @@ docker run --name mongodb --rm --network ts-docker-network  mongo
 docker run -p 5000:5000 --name ts-containe --rm -w //app -v ts-docker-logs://app/logs -v "//$(pwd)"://app -v //app/node_modules --rm --env-file .env --network ts-docker-network ts-docke
 r-monirul:v1
 docker network rm net_id
+---------------------------------front end command--------------------------------
+ docker run --name ts-docker-frontend-container  --rm -p 3000:3000 --env-file .env.local -w //app -v "//$(pwd)"://app -v //app/node_modules --network ts-docker-net -e WATCHPACK_POLLING=true  ts-docker-frontend:v1
