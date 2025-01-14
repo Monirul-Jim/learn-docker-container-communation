@@ -38,3 +38,10 @@ r-monirul:v1
 docker network rm net_id
 ---------------------------------front end command--------------------------------
  docker run --name ts-docker-frontend-container  --rm -p 3000:3000 --env-file .env.local -w //app -v "//$(pwd)"://app -v //app/node_modules --network ts-docker-net -e WATCHPACK_POLLING=true  ts-docker-frontend:v1
+  docker run --name mongodb --rm -v ts-docke-db://data/db  --network ts-docker-net  mongo         -------- for secure database
+
+
+
+
+  ----------------------------------------------- adding more security for database ------------------------
+docker run --name mongodb --rm -v ts-docke-db://data/db -e MONGO_INITDB_ROOT_USERNAME=ts-docker -e MONGO_INITDB_ROOT_PASSWORD=ts-docker  --network ts-docker-net  mongo
